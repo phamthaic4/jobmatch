@@ -1,0 +1,10 @@
+﻿__pycache__/
+*.py[cod]
+.venv/
+.env
+.pytest_cache/
+.ruff_cache/
+
+# Checkpoints are large; fetch them from the Proj 1 release instead
+models/*
+!models/README.md

@@ -1,0 +1,26 @@
+[project]
+name = "jobmatch"
+version = "0.1.0"
+description = "CV-JD skill gap analyzer: custom PhoBERT NER + FastAPI + Gemini interview prep"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM", "PIE"]
+ignore = [
+    "E501",
+    "B008",   # Depends() in argument defaults is the FastAPI convention
+    "B905",
+    "SIM105",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "slow: needs the model checkpoint in models/phobert-ner",
+]
+filterwarnings = ["ignore::DeprecationWarning"]
