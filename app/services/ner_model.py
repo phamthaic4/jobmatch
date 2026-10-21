@@ -62,10 +62,24 @@ def _sha256(path: Path) -> str:
 
 
 def _download(url: str, dest: Path) -> None:
+    """Download to a .part file first, so an interrupted download never looks complete."""
     tmp = dest.with_suffix(dest.suffix + ".part")
     with urllib.request.urlopen(url) as response, tmp.open("wb") as handle:
+        total = int(response.headers.get("Content-Length", 0) or 0)
+        downloaded = 0
+        last_report = 0.0
         while chunk := response.read(1024 * 1024):
             handle.write(chunk)
+            downloaded += len(chunk)
+            now = time.monotonic()
+            if now - last_report > 2:
+                percent = f"{downloaded / total * 100:5.1f}%" if total else "  ?  %"
+                print(
+                    f"    {percent}  {downloaded / 1e6:,.1f} MB"
+                    + (f" / {total / 1e6:,.1f} MB" if total else ""),
+                    flush=True,
+                )
+                last_report = now
     tmp.replace(dest)
 
 
