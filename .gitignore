@@ -8,3 +8,7 @@
 # Checkpoints are large; fetch them from the Proj 1 release instead
 models/*
 !models/README.md
+
+# Personal working plan (not part of the public repo)
+PROJECT_PLAN.md
+
